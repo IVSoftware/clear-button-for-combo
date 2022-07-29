@@ -16,12 +16,21 @@ namespace clear_button_for_combo
         public MainForm()
         {
             InitializeComponent();
-            ComboBox tmp = comboBox1;
-            tmp.FormattingEnabled = true;
-            tmp.Items.AddRange(new object[] {
-            "Apple",
-            "Orange",
-            "Banana"});
+
+            for (int i = 0; i < 3; i++)
+            {
+                var comboBoxClearUserControl = new ComboBoxClearUserControl
+                {
+                    Width = 200,
+                };
+                ComboBox comboBox = comboBoxClearUserControl;
+                comboBox.FormattingEnabled = true;
+                comboBox.Items.AddRange(new object[] {
+                    "Apple",
+                    "Orange",
+                    "Banana"});
+                flowLayoutPanel.Controls.Add(comboBoxClearUserControl);
+            }
         }
     }
     public class ComboBoxClearUserControl : UserControl
@@ -31,77 +40,77 @@ namespace clear_button_for_combo
             _comboBoxClear = new ComboBoxClear();
             Controls.Add(_comboBoxClear);
         }
-        private ComboBoxClear _comboBoxClear; 
+        private ComboBoxClear _comboBoxClear;
         public static implicit operator ComboBox(ComboBoxClearUserControl comboBoxClearUserControl) =>
             comboBoxClearUserControl._comboBoxClear;
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            _comboBoxClear.Size = Size;
+            _comboBoxClear.Width = Width;
         }
-    }
-    public class ComboBoxClear : ComboBox, IMessageFilter
-    {
-        public ComboBoxClear()
+        public class ComboBoxClear : ComboBox, IMessageFilter
         {
-            Margin = new Padding();
-        }
-        const int CB_DROP_HANDLE_WIDTH = 20;
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            base.OnHandleCreated(e);
-            Application.AddMessageFilter(this);
-            if(!(DesignMode || _isHandleInitialized))
+            public ComboBoxClear()
             {
-                _isHandleInitialized = true;
-                _lblClear.Location = 
-                    new Point(
-                        Location.X + Width - _lblClear.Width - CB_DROP_HANDLE_WIDTH,
-                        Location.Y + 2
-                );
-                Parent.Controls.Add(_lblClear);
-                _lblClear.Click += (sender, e) =>
+                Margin = new Padding(); // This size must be exactly equal to UserControl size.
+            }
+            const int CB_DROP_HANDLE_WIDTH = 26;
+            protected override void OnHandleCreated(EventArgs e)
+            {
+                base.OnHandleCreated(e);
+                Application.AddMessageFilter(this);
+                if (!(DesignMode || _isHandleInitialized))
                 {
-                    Text = String.Empty;
-                };
-                TextChanged += (sender, e) =>
+                    _isHandleInitialized = true;
+                    _lblClear.Location =
+                        new Point(
+                            Location.X + Width - _lblClear.Width - CB_DROP_HANDLE_WIDTH,
+                            Location.Y + 2
+                    );
+                    Parent.Controls.Add(_lblClear);
+                    _lblClear.Click += (sender, e) =>
+                    {
+                        Text = String.Empty;
+                    };
+                    TextChanged += (sender, e) =>
+                    {
+                        _lblClear.Visible = Text.Any();
+                    };
+                }
+            }
+            bool _isHandleInitialized = false;
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                if (disposing)
                 {
-                    _lblClear.Visible = Text.Any();
-                };
+                    Application.RemoveMessageFilter(this);
+                }
             }
-        }
-        bool _isHandleInitialized = false;
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if(disposing)
+            const int WM_PAINT = 0x000f;
+            public bool PreFilterMessage(ref Message m)
             {
-                Application.RemoveMessageFilter(this);
+                switch (m.Msg)
+                {
+                    case WM_PAINT:
+                        _lblClear.BringToFront();
+                        _lblClear.Refresh();
+                        break;
+                }
+                return false;
             }
-        }
-        const int WM_PAINT = 0x000f;
-        public bool PreFilterMessage(ref Message m)
-        {
-            switch (m.Msg)
+            private Label _lblClear = new Label
             {
-                case WM_PAINT:
-                    _lblClear.BringToFront();
-                    _lblClear.Refresh();
-                    break;
-            }
-            return false;
+                BackColor = SystemColors.Window,
+                BorderStyle = BorderStyle.None,
+                Size = new Size(22, 28),
+                Text = "✖",
+                TextAlign = ContentAlignment.MiddleCenter,
+                Font = new Font("Tahoma", 6),
+                Padding = new Padding(),
+                Margin = new Padding(),
+                Visible = false,
+            };
         }
-        private Label _lblClear = new Label
-        {
-            BackColor = SystemColors.Window,
-            BorderStyle = BorderStyle.None,
-            Size = new Size(28, 28),
-            Text = "✖",
-            TextAlign = ContentAlignment.MiddleCenter,
-            Font = new Font("Tahoma", 6),
-            Padding = new Padding(),
-            Margin = new Padding(),
-            Visible = false,
-        };
     }
 }
