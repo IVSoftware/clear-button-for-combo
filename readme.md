@@ -1,7 +1,7 @@
 ﻿# clear-button-for-combo
-Float an [x] over a ComboBox to clear it when text is present.
+The objective is to float an [x] over a ComboBox to clear it when text is present.
 
-This works reliably (for example, in a challenging environment like a `FlowLayoutControl`) when `ComboBoxClear` and the `_lblClear` share a deterministic parent `Control`. It doesn't need to be a `UserControl` specifically, however.
+This works reliably (for example, in a challenging environment like a `FlowLayoutControl`) when `ComboBoxClear` and the `_lblClear` share a deterministic parent `Control` (it doesn't need to be a `UserControl` specifically).
 
 There is a low-level hook of the `WM_PAINT` message that I left in the code even though it proved to be unnecessary in the end. A `ComboBox` is not going to fire a `Paint` message or hit an `OnPaint` override if one were to be added, but if you really needed to do something like that this shows how.
 
