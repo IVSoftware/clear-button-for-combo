@@ -13,7 +13,7 @@ namespace clear_button_for_combo
 
             for (int i = 0; i < 3; i++)
             {
-                var comboBoxClearUserControl = new ComboBoxClearUserControl
+                var comboBoxClearUserControl = new ComboBoxClearControl
                 {
                     Width = 250,
                 };
@@ -28,9 +28,9 @@ namespace clear_button_for_combo
             }
         }
     }
-    public class ComboBoxClearUserControl : UserControl
+    public class ComboBoxClearControl : Control
     {
-        public ComboBoxClearUserControl()
+        public ComboBoxClearControl()
         {
             _comboBoxClear = new ComboBoxClear();
             _comboBoxClear.SizeChanged += (sender, e) =>
@@ -40,7 +40,7 @@ namespace clear_button_for_combo
             Controls.Add(_comboBoxClear);
         }
         private ComboBoxClear _comboBoxClear;
-        public static implicit operator ComboBox(ComboBoxClearUserControl comboBoxClearUserControl) =>
+        public static implicit operator ComboBox(ComboBoxClearControl comboBoxClearUserControl) =>
             comboBoxClearUserControl._comboBoxClear;
         protected override void OnSizeChanged(EventArgs e)
         {
