@@ -29,7 +29,7 @@ namespace clear_button_for_combo
                     "Apple",
                     "Orange",
                     "Banana"});
-                comboBox.Font = new Font(comboBox.Font.FontFamily, 16F);
+                //comboBox.Font = new Font(comboBox.Font.FontFamily, 16F);
                 flowLayoutPanel.Controls.Add(comboBoxClearUserControl);
             }
         }
