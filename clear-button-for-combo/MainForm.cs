@@ -44,12 +44,13 @@ namespace clear_button_for_combo
     {
         public ComboBoxClear()
         {
-            Application.AddMessageFilter(this);
+            Margin = new Padding();
         }
         const int CB_DROP_HANDLE_WIDTH = 20;
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+            Application.AddMessageFilter(this);
             if(!(DesignMode || _isHandleInitialized))
             {
                 _isHandleInitialized = true;

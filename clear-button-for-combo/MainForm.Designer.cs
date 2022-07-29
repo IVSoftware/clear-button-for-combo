@@ -36,11 +36,10 @@ namespace clear_button_for_combo
             // 
             // comboBox1
             // 
-            this.comboBox1.AutoSize = true;
             this.comboBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.comboBox1.Location = new System.Drawing.Point(3, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(124, 36);
+            this.comboBox1.Size = new System.Drawing.Size(201, 33);
             this.comboBox1.TabIndex = 0;
             // 
             // flowLayoutPanel1
@@ -60,7 +59,6 @@ namespace clear_button_for_combo
             this.Name = "MainForm";
             this.Text = "Main Form";
             this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
