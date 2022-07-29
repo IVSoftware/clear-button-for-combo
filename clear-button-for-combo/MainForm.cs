@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -33,10 +34,7 @@ namespace clear_button_for_combo
         public ComboBoxClearControl()
         {
             _comboBoxClear = new ComboBoxClear();
-            _comboBoxClear.SizeChanged += (sender, e) =>
-            {
-                Height = _comboBoxClear.Height;
-            };
+            _comboBoxClear.SizeChanged += (sender, e) => Height = _comboBoxClear.Height;
             Controls.Add(_comboBoxClear);
         }
         private ComboBoxClear _comboBoxClear;
@@ -45,16 +43,15 @@ namespace clear_button_for_combo
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            _comboBoxClear.Width = Width;   // Width of UC goes to CB
-            Height = _comboBoxClear.Height; // Height of CB goes to UC
+            _comboBoxClear.Width = Width;   // Width of C goes to CB
+            Height = _comboBoxClear.Height; // Height of CB goes to C
         }
         public class ComboBoxClear : ComboBox, IMessageFilter
         {
-            public ComboBoxClear()
-            {
-                Margin = new Padding(); // This size must be exactly equal to UserControl size.
-            }
+            public ComboBoxClear() => Margin = new Padding(); 
+
             const int CB_DROP_HANDLE_WIDTH = 26;
+            bool _isHandleInitialized = false;
             protected override void OnHandleCreated(EventArgs e)
             {
                 base.OnHandleCreated(e);
@@ -68,38 +65,13 @@ namespace clear_button_for_combo
                             Location.Y + 2
                     );
                     Parent.Controls.Add(_lblClear);
-                    _lblClear.Click += (sender, e) =>
-                    {
-                        Text = String.Empty;
-                    };
-                    TextChanged += (sender, e) =>
-                    {
-                        _lblClear.Visible = Text.Any();
-                    };
+                    _lblClear.BringToFront();
+                    _lblClear.Click += (sender, e) => Text = String.Empty;
+                    TextChanged += (sender, e) => _lblClear.Visible = Text.Any();
                     Application.AddMessageFilter(this);
                 }
             }
-            bool _isHandleInitialized = false;
-            protected override void Dispose(bool disposing)
-            {
-                base.Dispose(disposing);
-                if (disposing)
-                {
-                    Application.RemoveMessageFilter(this);
-                }
-            }
-            const int WM_PAINT = 0x000f;
-            public bool PreFilterMessage(ref Message m)
-            {
-                switch (m.Msg)
-                {
-                    case WM_PAINT:
-                        _lblClear.BringToFront();
-                        _lblClear.Refresh();
-                        break;
-                }
-                return false;
-            }
+
             private Label _lblClear = new Label
             {
                 BackColor = SystemColors.Window,
@@ -111,6 +83,21 @@ namespace clear_button_for_combo
                 Margin = new Padding(),
                 Visible = false,
             };
+            public bool PreFilterMessage(ref Message m)
+            {
+                if (m.Msg == WM_PAINT)
+                { } // Paint something if needed
+                return false;
+            }
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                if (disposing)
+                {
+                    Application.RemoveMessageFilter(this);
+                }
+            }
+            const int WM_PAINT = 0x000f;
         }
     }
 }
