@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace clear_button_for_combo
@@ -29,7 +23,7 @@ namespace clear_button_for_combo
                     "Apple",
                     "Orange",
                     "Banana"});
-                //comboBox.Font = new Font(comboBox.Font.FontFamily, 16F);
+                comboBox.Font = new Font(comboBox.Font.FontFamily, 16F);
                 flowLayoutPanel.Controls.Add(comboBoxClearUserControl);
             }
         }
@@ -64,7 +58,6 @@ namespace clear_button_for_combo
             protected override void OnHandleCreated(EventArgs e)
             {
                 base.OnHandleCreated(e);
-                Application.AddMessageFilter(this);
                 if (!(DesignMode || _isHandleInitialized))
                 {
                     _isHandleInitialized = true;
@@ -83,6 +76,7 @@ namespace clear_button_for_combo
                     {
                         _lblClear.Visible = Text.Any();
                     };
+                    Application.AddMessageFilter(this);
                 }
             }
             bool _isHandleInitialized = false;
