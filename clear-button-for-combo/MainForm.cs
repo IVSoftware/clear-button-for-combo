@@ -16,6 +16,28 @@ namespace clear_button_for_combo
         public MainForm()
         {
             InitializeComponent();
+            ComboBox tmp = comboBox1;
+            tmp.FormattingEnabled = true;
+            tmp.Items.AddRange(new object[] {
+            "Apple",
+            "Orange",
+            "Banana"});
+        }
+    }
+    public class ComboBoxClearUserControl : UserControl
+    {
+        public ComboBoxClearUserControl()
+        {
+            _comboBoxClear = new ComboBoxClear();
+            Controls.Add(_comboBoxClear);
+        }
+        private ComboBoxClear _comboBoxClear; 
+        public static implicit operator ComboBox(ComboBoxClearUserControl comboBoxClearUserControl) =>
+            comboBoxClearUserControl._comboBoxClear;
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            _comboBoxClear.Size = Size;
         }
     }
     public class ComboBoxClear : ComboBox, IMessageFilter

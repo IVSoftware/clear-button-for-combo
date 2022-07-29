@@ -29,36 +29,46 @@ namespace clear_button_for_combo
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new clear_button_for_combo.ComboBoxClear();
+            this.comboBox1 = new clear_button_for_combo.ComboBoxClearUserControl();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Apple",
-            "Orange",
-            "Banana"});
-            this.comboBox1.Location = new System.Drawing.Point(32, 46);
+            this.comboBox1.AutoSize = true;
+            this.comboBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.comboBox1.Location = new System.Drawing.Point(3, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(182, 33);
+            this.comboBox1.Size = new System.Drawing.Size(124, 36);
             this.comboBox1.TabIndex = 0;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.comboBox1);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(32, 85);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(300, 150);
+            this.flowLayoutPanel1.TabIndex = 1;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(478, 244);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "MainForm";
             this.Text = "Main Form";
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private clear_button_for_combo.ComboBoxClear comboBox1;
+        private clear_button_for_combo.ComboBoxClearUserControl comboBox1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
 
