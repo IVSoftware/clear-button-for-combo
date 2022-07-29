@@ -32,11 +32,14 @@ namespace clear_button_for_combo
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanel
             // 
-            this.flowLayoutPanel.Location = new System.Drawing.Point(32, 85);
-            this.flowLayoutPanel.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel.Size = new System.Drawing.Size(300, 150);
+            this.flowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel.Location = new System.Drawing.Point(42, 12);
+            this.flowLayoutPanel.Name = "flowLayoutPanel";
+            this.flowLayoutPanel.Size = new System.Drawing.Size(372, 220);
             this.flowLayoutPanel.TabIndex = 1;
             // 
             // MainForm

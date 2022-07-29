@@ -21,7 +21,7 @@ namespace clear_button_for_combo
             {
                 var comboBoxClearUserControl = new ComboBoxClearUserControl
                 {
-                    Width = 200,
+                    Width = 250,
                 };
                 ComboBox comboBox = comboBoxClearUserControl;
                 comboBox.FormattingEnabled = true;
@@ -29,6 +29,7 @@ namespace clear_button_for_combo
                     "Apple",
                     "Orange",
                     "Banana"});
+                comboBox.Font = new Font(comboBox.Font.FontFamily, 16F);
                 flowLayoutPanel.Controls.Add(comboBoxClearUserControl);
             }
         }
@@ -38,6 +39,10 @@ namespace clear_button_for_combo
         public ComboBoxClearUserControl()
         {
             _comboBoxClear = new ComboBoxClear();
+            _comboBoxClear.SizeChanged += (sender, e) =>
+            {
+                Height = _comboBoxClear.Height;
+            };
             Controls.Add(_comboBoxClear);
         }
         private ComboBoxClear _comboBoxClear;
@@ -46,7 +51,8 @@ namespace clear_button_for_combo
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            _comboBoxClear.Width = Width;
+            _comboBoxClear.Width = Width;   // Width of UC goes to CB
+            Height = _comboBoxClear.Height; // Height of CB goes to UC
         }
         public class ComboBoxClear : ComboBox, IMessageFilter
         {
@@ -62,6 +68,7 @@ namespace clear_button_for_combo
                 if (!(DesignMode || _isHandleInitialized))
                 {
                     _isHandleInitialized = true;
+                    _lblClear.Size = new Size(Height - 6, Height - 4);
                     _lblClear.Location =
                         new Point(
                             Location.X + Width - _lblClear.Width - CB_DROP_HANDLE_WIDTH,
@@ -103,7 +110,6 @@ namespace clear_button_for_combo
             {
                 BackColor = SystemColors.Window,
                 BorderStyle = BorderStyle.None,
-                Size = new Size(22, 28),
                 Text = "✖",
                 TextAlign = ContentAlignment.MiddleCenter,
                 Font = new Font("Tahoma", 6),
